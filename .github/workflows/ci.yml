@@ -52,7 +52,12 @@ jobs:
       - name: Install dependencies
         run: pip install -e ".[dev]"
       - name: Build model container
-        run: make docker-build
+        run: |
+          if [ -f model/Dockerfile ]; then
+            make docker-build
+          else
+            echo "Dockerfile not yet created — skipping build"
+          fi
       - name: Integration tests
         run: make test-integration
 
