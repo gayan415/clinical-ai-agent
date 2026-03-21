@@ -17,7 +17,7 @@ lint-fix:
 	ruff format .
 
 type-check:
-	mypy cli.py agent/ model/ rag/ mlops/ sre/
+	mypy agent/ model/ rag/ mlops/ sre/ $(wildcard cli.py)
 
 security:
 	bandit -r agent/ model/ rag/ mlops/ sre/ -ll
