@@ -52,10 +52,18 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 | 5 | Tue Mar 25 | MLOps + perf benchmarks + runbook (Tasks 22-27) |
 | 6 | Wed Mar 26 | Polish + demo + AWS doc (Tasks 28-30) |
 
+## Git Workflow Rules
+- **NEVER push directly to main** — always create a feature branch
+- **Every task = branch + PR** — engineer reviews and merges manually
+- **Pre-commit hooks run automatically** — ruff (lint), bandit (security), file hygiene
+- Branch naming: `feat/`, `fix/`, `chore/`, `test/`, `docs/` prefixes
+
 ## Current Progress
 - [x] Design doc written and approved
 - [x] Implementation plan written (30 tasks)
-- [ ] Day 1: Tasks 1-6 (starting now)
+- [x] Day 1: Tasks 1-6 COMPLETE (repo, structure, CI, README, deps, GitHub push)
+- [x] Pre-commit hooks configured (ruff, bandit, file hygiene)
+- [ ] Day 2: Tasks 7-11 (RAG pipeline) — NEXT
 
 ## Commands
 ```bash
