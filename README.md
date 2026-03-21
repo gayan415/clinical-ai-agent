@@ -69,7 +69,7 @@ A production-grade clinical AI agent that demonstrates end-to-end ML engineering
 
 ### Setup
 ```bash
-git clone https://github.com/YOUR_USERNAME/clinical-ai-agent.git
+git clone https://github.com/gayan415/clinical-ai-agent.git
 cd clinical-ai-agent
 pip install -e ".[dev]"
 
