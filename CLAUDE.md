@@ -3,19 +3,31 @@
 ## Project Overview
 Portfolio project demonstrating production-grade clinical AI engineering. LangChain agent on AWS Bedrock (Claude) with RAG retrieval, ML risk prediction, and treatment recommendations — wrapped with full SRE practices, MLOps, and clinical safety.
 
-## Development Methodology: TDD + Agentic Development
-This project is built using **Agentic Development** — AI agents (Claude Code) as development partners, directed by the engineer. NOT vibe coding. The engineer:
+## Development Methodology: TDD + Agentic Coding (NOT Vibe Coding)
+This project is built using **Agentic Coding** — AI agents (Claude Code) as development partners, directed by the engineer. The engineer:
 1. **Architects** — makes all design decisions, validates approaches, approves before any code
 2. **Directs** — breaks work into tasks, sets constraints, reviews output
 3. **Reviews** — every line of code is reviewed before commit, tests must pass
 4. **Owns** — understands every component, can explain and defend every decision
+
+### Task Flow (MANDATORY for every task)
+1. **Teach** — explain the new concept before writing any code
+2. **Test** — write the failing test, explain what it's testing and why
+3. **Build** — implement the code, explain key decisions
+4. **Verify** — run tests, engineer confirms understanding
+5. **Commit** — feature branch + PR, engineer reviews and merges
+
+### What this is NOT
+- NOT vibe coding — no generating walls of code the engineer can't explain
+- NOT auto-pilot — agent stops and teaches when introducing new concepts
+- NOT "trust the AI" — every line must be understood before merge
 
 Combined with **Test-Driven Development**:
 - Write failing test first → implement → verify → commit
 - Full test pyramid: unit, ML behavioral, integration, e2e, performance
 - Tests are the specification, not an afterthought
 
-This is how production AI teams will work — engineers directing AI agents with engineering discipline, not blindly accepting generated code.
+This is how production AI teams will work — engineers directing AI agents with engineering rigor.
 
 ## Project Root
 `/Users/gjayasun/git/AI/clinical-ai-agent`
