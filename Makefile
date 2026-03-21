@@ -22,18 +22,18 @@ type-check:
 security:
 	bandit -r agent/ model/ rag/ mlops/ sre/ -ll
 
-# Testing
+# Testing (exit code 5 = no tests collected, not a failure)
 test-unit:
 	pytest tests/unit/ -v -m unit
 
 test-ml:
-	pytest tests/ml/ -v -m ml
+	pytest tests/ml/ -v -m ml || test $$? -eq 5
 
 test-integration:
-	pytest tests/integration/ -v -m integration
+	pytest tests/integration/ -v -m integration || test $$? -eq 5
 
 test-e2e:
-	pytest tests/e2e/ -v -m e2e
+	pytest tests/e2e/ -v -m e2e || test $$? -eq 5
 
 test-perf:
 	python -m perf.benchmark
