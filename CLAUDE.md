@@ -75,7 +75,21 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 - [x] Implementation plan written (30 tasks)
 - [x] Day 1: Tasks 1-6 COMPLETE (repo, structure, CI, README, deps, GitHub push)
 - [x] Pre-commit hooks configured (ruff, bandit, file hygiene)
-- [ ] Day 2: Tasks 7-11 (RAG pipeline) — NEXT
+- [x] CI fixes merged (missing cli.py, empty tests, missing Dockerfile, missing benchmark)
+- [ ] Day 2: Tasks 7-11 (RAG pipeline) — IN PROGRESS
+  - [x] Task 7: Clinical snippets (4 markdown files: NYHA, GDMT, CardioMEMS, risk factors)
+  - [x] Task 8: RAG ingestion (load_markdown_files, chunk_documents, get_chroma_embedding_function) — 9/9 tests passing
+  - [x] Task 9: RAG retriever (ClinicalRetriever with ChromaDB similarity search) — 4/4 tests passing
+  - [x] Task 10: RAG retrieval quality tests — 3/3 tests passing
+  - [x] Task 11: End-to-end ingestion (4 docs → 34 chunks → ChromaDB) — verified with live query
+
+## Environment Variables
+```bash
+# Embedding provider (default: huggingface, runs locally)
+EMBEDDING_PROVIDER=huggingface   # or "bedrock" for AWS Titan Embed
+AWS_REGION=us-east-1             # only needed if EMBEDDING_PROVIDER=bedrock
+AWS_PROFILE=sbg-bedrock          # only needed if EMBEDDING_PROVIDER=bedrock
+```
 
 ## Commands
 ```bash
