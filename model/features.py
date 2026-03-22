@@ -57,8 +57,8 @@ def extract_features(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
     Returns:
         Tuple of (X, y) where X is shape (n_patients, 12) and y is shape (n_patients,)
     """
-    X = df[FEATURE_COLUMNS].values.astype(np.float32)
-    y = df[TARGET_COLUMN].values.astype(np.float32)
+    X = np.array(df[FEATURE_COLUMNS].values, dtype=np.float32)
+    y = np.array(df[TARGET_COLUMN].values, dtype=np.float32)
     return X, y
 
 

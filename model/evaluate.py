@@ -9,6 +9,8 @@ Metrics explained:
 - F1: Harmonic mean of precision and recall. Balances both.
 """
 
+from typing import Any
+
 import numpy as np
 import torch
 from sklearn.metrics import (
@@ -21,7 +23,7 @@ from sklearn.metrics import (
 
 
 def evaluate_model(
-    model: object,
+    model: Any,
     X_test: np.ndarray,
     y_test: np.ndarray,
     model_type: str = "xgboost",
@@ -53,14 +55,14 @@ def evaluate_model(
     }
 
 
-def _predict_xgboost(model: object, X_test: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def _predict_xgboost(model: Any, X_test: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Get predictions from XGBoost model."""
-    y_pred = model.predict(X_test)  # type: ignore[union-attr]
-    y_prob = model.predict_proba(X_test)[:, 1]  # type: ignore[union-attr]
+    y_pred = model.predict(X_test)
+    y_prob = model.predict_proba(X_test)[:, 1]
     return y_pred, y_prob
 
 
-def _predict_pytorch(model_dict: object, X_test: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def _predict_pytorch(model_dict: Any, X_test: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Get predictions from PyTorch model.
 
     PyTorch requires:
@@ -69,9 +71,8 @@ def _predict_pytorch(model_dict: object, X_test: np.ndarray) -> tuple[np.ndarray
     3. Run through model with no_grad() (skip gradient computation — we're not training)
     4. Convert back to numpy
     """
-    md = model_dict  # type: ignore[assignment]
-    scaler = md["scaler"]
-    model = md["model"]
+    scaler = model_dict["scaler"]
+    model = model_dict["model"]
 
     X_scaled = scaler.transform(X_test)
     X_tensor = torch.FloatTensor(X_scaled)

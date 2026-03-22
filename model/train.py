@@ -82,7 +82,8 @@ class HeartFailureNet(nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.network(x)
+        result: torch.Tensor = self.network(x)
+        return result
 
 
 def train_pytorch(
