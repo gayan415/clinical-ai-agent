@@ -1,4 +1,4 @@
-.PHONY: install dev lint lint-fix type-check security test test-unit test-ml test-integration test-e2e test-perf test-all ci clean docker-build docker-run ingest train run
+.PHONY: install dev setup download-model lint lint-fix type-check security test test-unit test-ml test-integration test-e2e test-perf test-all ci clean docker-build docker-run ingest train run
 
 # Setup
 install:
@@ -6,6 +6,13 @@ install:
 
 dev:
 	pip install -e ".[dev]"
+
+download-model:
+	@echo "Downloading HuggingFace embedding model (all-MiniLM-L6-v2, ~80MB)..."
+	python -c "import truststore; truststore.inject_into_ssl(); from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2'); print('Model cached successfully.')"
+
+setup: dev download-model
+	@echo "Setup complete. Run 'make ingest' to build the vector store."
 
 # Quality
 lint:
