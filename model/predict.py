@@ -100,8 +100,13 @@ def create_app(model_path: str) -> FastAPI:
     return app
 
 
-# Default app instance for uvicorn (used by Docker CMD)
-# MODEL_PATH env var allows overriding at runtime
+# Default app instance for uvicorn (used by Docker CMD).
+# Only created when MODEL_PATH exists — avoids crash during test collection in CI.
 import os  # noqa: E402
 
-app = create_app(model_path=os.environ.get("MODEL_PATH", "models/xgboost_hf_risk.pkl"))
+_model_path = os.environ.get("MODEL_PATH", "models/xgboost_hf_risk.pkl")
+if os.path.exists(_model_path):
+    app = create_app(model_path=_model_path)
+else:
+    # Placeholder for CI/test environments where model file doesn't exist yet
+    app = FastAPI(title="Heart Failure Risk Prediction API (no model loaded)")
