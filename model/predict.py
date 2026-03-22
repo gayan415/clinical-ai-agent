@@ -98,3 +98,10 @@ def create_app(model_path: str) -> FastAPI:
         )
 
     return app
+
+
+# Default app instance for uvicorn (used by Docker CMD)
+# MODEL_PATH env var allows overriding at runtime
+import os  # noqa: E402
+
+app = create_app(model_path=os.environ.get("MODEL_PATH", "models/xgboost_hf_risk.pkl"))

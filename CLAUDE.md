@@ -85,7 +85,7 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
     - PyTorch: AUC > 0.70, feedforward net (12→64→32→1)
   - [x] Task 15: Behavioral tests (directional, min functionality, edge cases) — 7/7 passing
   - [x] Task 16: FastAPI prediction endpoint (/predict, /health, /ready) — 6/6 passing
-  - [ ] Task 17: Dockerfile for model service — NEXT
+  - [x] Task 17: Dockerfile for model service (python:3.11-slim, serving deps only, healthcheck)
 
 ## Environment Variables
 ```bash
