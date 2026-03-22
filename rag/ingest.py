@@ -23,6 +23,36 @@ if TYPE_CHECKING:
     import chromadb
 
 
+def load_pdf_files(directory: str) -> list[Document]:
+    """Load all .pdf files from a directory into LangChain Documents.
+
+    Uses pypdf to extract text from each page, then combines all pages
+    into one Document per file. Metadata includes the source file path.
+
+    PDFs may have messy text (headers, footers, page numbers) — the
+    chunking step downstream handles splitting into clean pieces.
+    """
+    from pypdf import PdfReader
+
+    docs = []
+    dir_path = Path(directory)
+
+    for pdf_file in sorted(dir_path.glob("*.pdf")):
+        reader = PdfReader(str(pdf_file))
+        # Extract text from all pages, join with newlines
+        pages = [page.extract_text() or "" for page in reader.pages]
+        text = "\n".join(pages).strip()
+
+        docs.append(
+            Document(
+                page_content=text,
+                metadata={"source": str(pdf_file)},
+            )
+        )
+
+    return docs
+
+
 def load_markdown_files(directory: str) -> list[Document]:
     """Load all .md files from a directory into LangChain Documents.
 
@@ -124,6 +154,7 @@ def ingest_documents(data_dir: str, persist_dir: str) -> None:
     guidelines_dir = Path(data_dir) / "guidelines"
     if guidelines_dir.exists():
         all_docs.extend(load_markdown_files(str(guidelines_dir)))
+        all_docs.extend(load_pdf_files(str(guidelines_dir)))
 
     if not all_docs:
         print("No documents found to ingest.")

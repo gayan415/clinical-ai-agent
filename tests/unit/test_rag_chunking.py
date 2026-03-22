@@ -7,7 +7,7 @@ What we're testing:
 
 import pytest
 
-from rag.ingest import chunk_documents, load_markdown_files
+from rag.ingest import chunk_documents, load_markdown_files, load_pdf_files
 
 
 @pytest.mark.unit
@@ -49,6 +49,49 @@ class TestLoadMarkdown:
     def test_empty_directory_returns_empty(self, tmp_path):
         """Empty directory should return empty list, not crash."""
         docs = load_markdown_files(str(tmp_path))
+        assert docs == []
+
+
+@pytest.mark.unit
+class TestLoadPDF:
+    """Test that we can load PDF files into LangChain Document objects.
+
+    pypdf reads the text layer from each page of a PDF.
+    We combine all pages into one Document per file.
+    """
+
+    def test_loads_pdf_file(self, tmp_path):
+        """Should load a PDF and extract its text content."""
+        # Create a minimal PDF using pypdf
+        from pypdf import PdfWriter
+
+        writer = PdfWriter()
+        writer.add_blank_page(width=612, height=792)
+        # pypdf blank pages have no text, so we test with a real-ish approach
+        pdf_path = tmp_path / "test.pdf"
+        writer.write(str(pdf_path))
+
+        docs = load_pdf_files(str(tmp_path))
+        # Blank PDF returns a Document (even if content is empty)
+        assert len(docs) == 1
+        assert "source" in docs[0].metadata
+        assert "test.pdf" in docs[0].metadata["source"]
+
+    def test_ignores_non_pdf_files(self, tmp_path):
+        """Should only load .pdf files, ignore everything else."""
+        from pypdf import PdfWriter
+
+        writer = PdfWriter()
+        writer.add_blank_page(width=612, height=792)
+        writer.write(str(tmp_path / "good.pdf"))
+        (tmp_path / "bad.md").write_text("# Not a PDF")
+
+        docs = load_pdf_files(str(tmp_path))
+        assert len(docs) == 1
+
+    def test_empty_directory_returns_empty(self, tmp_path):
+        """No PDFs = empty list."""
+        docs = load_pdf_files(str(tmp_path))
         assert docs == []
 
 
