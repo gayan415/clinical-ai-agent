@@ -14,9 +14,13 @@ truststore.inject_into_ssl()
 
 import os  # noqa: E402
 from pathlib import Path  # noqa: E402
+from typing import TYPE_CHECKING  # noqa: E402
 
 from langchain_core.documents import Document  # noqa: E402
 from langchain_text_splitters import RecursiveCharacterTextSplitter  # noqa: E402
+
+if TYPE_CHECKING:
+    import chromadb
 
 
 def load_markdown_files(directory: str) -> list[Document]:
@@ -64,7 +68,7 @@ def chunk_documents(
     return splitter.split_documents(documents)
 
 
-def get_chroma_embedding_function():
+def get_chroma_embedding_function() -> "chromadb.EmbeddingFunction[list[str]]":  # type: ignore[type-arg]
     """Return a ChromaDB-compatible embedding function.
 
     Default: HuggingFace all-MiniLM-L6-v2 (local, free, no API calls)
@@ -79,7 +83,7 @@ def get_chroma_embedding_function():
     if provider == "bedrock":
         from chromadb import EmbeddingFunction, Embeddings
 
-        class BedrockEmbeddingFunction(EmbeddingFunction):
+        class BedrockEmbeddingFunction(EmbeddingFunction):  # type: ignore[type-arg]
             """Wraps AWS Bedrock Titan Embed for ChromaDB."""
 
             def __init__(self) -> None:
@@ -91,7 +95,7 @@ def get_chroma_embedding_function():
                 )
 
             def __call__(self, input: list[str]) -> Embeddings:
-                return self._model.embed_documents(input)
+                return self._model.embed_documents(input)  # type: ignore[return-value]
 
         return BedrockEmbeddingFunction()
 
@@ -135,7 +139,7 @@ def ingest_documents(data_dir: str, persist_dir: str) -> None:
     client = chromadb.PersistentClient(path=persist_dir)
     collection = client.get_or_create_collection(
         name="clinical_docs",
-        embedding_function=chroma_ef,
+        embedding_function=chroma_ef,  # type: ignore[arg-type]
     )
 
     # Add chunks to collection

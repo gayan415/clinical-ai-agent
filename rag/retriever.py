@@ -28,7 +28,7 @@ class ClinicalRetriever:
         client = chromadb.PersistentClient(path=persist_dir)
         self._collection = client.get_or_create_collection(
             name="clinical_docs",
-            embedding_function=chroma_ef,
+            embedding_function=chroma_ef,  # type: ignore[arg-type]
         )
 
     def query(self, question: str) -> list[Document]:
