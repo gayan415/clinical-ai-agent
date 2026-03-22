@@ -83,9 +83,9 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
   - [x] Task 14: XGBoost + PyTorch training + quality gates — 3/3 tests passing
     - XGBoost: AUC > 0.75, class imbalance handled with scale_pos_weight
     - PyTorch: AUC > 0.70, feedforward net (12→64→32→1)
-  - [ ] Task 15: Behavioral tests (directional, invariance, edge cases)
-  - [ ] Task 16: FastAPI prediction endpoint + tests
-  - [ ] Task 17: Dockerfile for model service
+  - [x] Task 15: Behavioral tests (directional, min functionality, edge cases) — 7/7 passing
+  - [x] Task 16: FastAPI prediction endpoint (/predict, /health, /ready) — 6/6 passing
+  - [ ] Task 17: Dockerfile for model service — NEXT
 
 ## Environment Variables
 ```bash
