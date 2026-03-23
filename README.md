@@ -135,16 +135,49 @@ clinical-ai-agent/
 - Human-in-the-loop: agent recommends, never decides
 - All responses include clinical disclaimer
 
-## Development Methodology
+## Development Methodology: TDD + Human-in-the-Loop Agentic
 
-**TDD + Agentic Development** — This project was built using AI agents (Claude Code) as development partners, directed by the engineer with strict engineering discipline:
+This project uses **TDD + Agentic Coding** — not vibe coding. Every feature follows this flow:
 
-1. **Architect** — all design decisions made and validated by the engineer
-2. **Direct** — work broken into 30 TDD tasks, constraints set, approaches reviewed
-3. **Review** — every line of code reviewed before commit, tests must pass
-4. **Own** — engineer understands and can defend every component and decision
+```
+┌─────────────────────────────┐
+│  1. DESIGN                  │  Human + AI brainstorm architecture,
+│     (Spec & Plan)           │  validate approach, write design doc
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│  2. TEACH                   │  AI explains new concepts (RAG, embeddings,
+│     (Learn before code)     │  XGBoost, PyTorch) before writing any code
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│  3. TEST                    │  Write failing tests first — tests define
+│     (TDD red phase)        │  the behavior, not the implementation
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│  4. IMPLEMENT               │  AI agent codes until tests pass
+│     (TDD green phase)       │  (agentic execution with constraints)
+└──────────────┬──────────────┘
+               ▼
+┌─────────────────────────────┐
+│  5. REVIEW & OWN            │  Human reviews PR, asks questions,
+│     (Human-in-the-loop)     │  doesn't merge until every line is understood
+└─────────────────────────────┘
+```
 
-This is how production AI teams will operate — engineers directing AI agents with engineering rigor, not blindly accepting generated code.
+**Why this works:**
+- **Design** catches "building the wrong thing"
+- **Tests** catch "building the thing wrong"
+- **AI agent** handles execution speed
+- **Human review** ensures judgment and ownership
+
+**What this is NOT:**
+- Not **vibe coding** — no accepting AI output blindly
+- Not **prompt-driven** — human architects, reviews, and owns every decision
+- Not **auto-pilot** — AI stops and teaches when introducing new concepts
+
+30 tasks, 30 commits, full test pyramid, pre-commit security gates, branch + PR workflow.
 
 ## AWS Deployment Architecture
 
