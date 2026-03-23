@@ -58,11 +58,7 @@ class CircuitBreaker:
     def allow_request(self) -> bool:
         """Should we allow a request through?"""
         current = self.state
-        if current == CircuitState.CLOSED:
-            return True
-        if current == CircuitState.HALF_OPEN:
-            return True  # allow one test request
-        return False  # OPEN — block
+        return current in (CircuitState.CLOSED, CircuitState.HALF_OPEN)
 
     def record_success(self) -> None:
         """Call succeeded — reset failures, close circuit."""
