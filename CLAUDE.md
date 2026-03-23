@@ -77,15 +77,12 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 - [x] Pre-commit hooks configured (ruff, bandit, file hygiene)
 - [x] CI fixes merged (missing cli.py, empty tests, missing Dockerfile, missing benchmark)
 - [x] Day 2: Tasks 7-11 COMPLETE (RAG pipeline — 18 tests passing)
-- [ ] Day 3: Tasks 12-17 (ML models) — IN PROGRESS
-  - [x] Task 12: UCI Heart Failure dataset downloaded (299 patients, 13 columns)
-  - [x] Task 13: Data validation + features.py — 11/11 tests passing
-  - [x] Task 14: XGBoost + PyTorch training + quality gates — 3/3 tests passing
-    - XGBoost: AUC > 0.75, class imbalance handled with scale_pos_weight
-    - PyTorch: AUC > 0.70, feedforward net (12→64→32→1)
-  - [x] Task 15: Behavioral tests (directional, min functionality, edge cases) — 7/7 passing
-  - [x] Task 16: FastAPI prediction endpoint (/predict, /health, /ready) — 6/6 passing
-  - [x] Task 17: Dockerfile for model service (python:3.11-slim, serving deps only, healthcheck)
+- [x] Day 3: Tasks 12-17 COMPLETE (ML models — 27 tests)
+- [ ] Day 4: Tasks 18-21 (Agent layer) — IN PROGRESS
+  - [x] Task 18: Safety module (disclaimer, confidence check, audit trail) — 8/8 passing
+  - [x] Task 19: Circuit breaker (CLOSED/OPEN/HALF_OPEN) — 8/8 passing
+  - [x] Task 20: LangChain agent + 3 tools (RAG, predict, recommend) + system prompt
+  - [x] Task 21: CLI entry point (assess + demo commands)
 
 ## Environment Variables
 ```bash
