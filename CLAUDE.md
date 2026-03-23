@@ -76,12 +76,16 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 - [x] Day 1: Tasks 1-6 COMPLETE (repo, structure, CI, README, deps, GitHub push)
 - [x] Pre-commit hooks configured (ruff, bandit, file hygiene)
 - [x] CI fixes merged (missing cli.py, empty tests, missing Dockerfile, missing benchmark)
-- [ ] Day 2: Tasks 7-11 (RAG pipeline) — IN PROGRESS
-  - [x] Task 7: Clinical snippets (4 markdown files: NYHA, GDMT, CardioMEMS, risk factors)
-  - [x] Task 8: RAG ingestion (load_markdown_files, chunk_documents, get_chroma_embedding_function) — 9/9 tests passing
-  - [x] Task 9: RAG retriever (ClinicalRetriever with ChromaDB similarity search) — 4/4 tests passing
-  - [x] Task 10: RAG retrieval quality tests — 3/3 tests passing
-  - [x] Task 11: End-to-end ingestion (4 docs → 34 chunks → ChromaDB) — verified with live query
+- [x] Day 2: Tasks 7-11 COMPLETE (RAG pipeline — 18 tests passing)
+- [ ] Day 3: Tasks 12-17 (ML models) — IN PROGRESS
+  - [x] Task 12: UCI Heart Failure dataset downloaded (299 patients, 13 columns)
+  - [x] Task 13: Data validation + features.py — 11/11 tests passing
+  - [x] Task 14: XGBoost + PyTorch training + quality gates — 3/3 tests passing
+    - XGBoost: AUC > 0.75, class imbalance handled with scale_pos_weight
+    - PyTorch: AUC > 0.70, feedforward net (12→64→32→1)
+  - [x] Task 15: Behavioral tests (directional, min functionality, edge cases) — 7/7 passing
+  - [x] Task 16: FastAPI prediction endpoint (/predict, /health, /ready) — 6/6 passing
+  - [x] Task 17: Dockerfile for model service (python:3.11-slim, serving deps only, healthcheck)
 
 ## Environment Variables
 ```bash
