@@ -8,11 +8,11 @@ license = {text = "MIT"}
 authors = [{name = "Gayan Jayasundara"}]
 
 dependencies = [
-    # LLM & Agent
-    "langchain>=0.3.0",
-    "langchain-aws>=0.2.0",
-    "langchain-community>=0.3.0",
-    "langchain-huggingface>=0.1.0",
+    # LLM & Agent (pinned to tested versions — LangChain API changes frequently)
+    "langchain>=1.2.0,<2.0.0",
+    "langchain-aws>=1.4.0,<2.0.0",
+    "langchain-community>=0.4.0,<1.0.0",
+    "langchain-huggingface>=1.2.0,<2.0.0",
 
     # RAG
     "chromadb>=0.5.0",
