@@ -8,15 +8,16 @@ ReAct loop: Reason → Act → Observe → Repeat or Answer
 """
 
 import os
+from typing import Any
 
-from langchain.agents import create_react_agent
+from langchain.agents import create_agent
 from langchain_aws import ChatBedrockConverse
 
 from agent.prompts import SYSTEM_PROMPT
 from agent.tools import predict_risk, recommend_treatment, retrieve_clinical_context
 
 
-def create_clinical_agent() -> object:
+def create_clinical_agent() -> Any:
     """Create the clinical AI agent with Bedrock Claude and 3 tools.
 
     Environment variables:
@@ -25,7 +26,7 @@ def create_clinical_agent() -> object:
         BEDROCK_MODEL_ID: Model ID (default: us.anthropic.claude-sonnet-4-20250514-v1:0)
 
     Returns:
-        A LangChain agent that can be invoked with patient scenarios.
+        A LangChain compiled agent graph that can be invoked with patient scenarios.
     """
     # Set AWS profile if specified
     profile = os.environ.get("AWS_PROFILE", "sbg-bedrock")
@@ -45,13 +46,11 @@ def create_clinical_agent() -> object:
 
     tools = [retrieve_clinical_context, predict_risk, recommend_treatment]
 
-    agent = create_react_agent(
+    return create_agent(
         model=llm,
         tools=tools,
-        prompt=SYSTEM_PROMPT,
+        system_prompt=SYSTEM_PROMPT,
     )
-
-    return agent
 
 
 def run_assessment(scenario: str) -> str:
