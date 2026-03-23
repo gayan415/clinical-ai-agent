@@ -40,7 +40,7 @@ def create_clinical_agent() -> object:
         model=model_id,
         region_name=os.environ.get("AWS_REGION", "us-east-1"),
         temperature=0.1,  # Low temperature for clinical accuracy
-        max_tokens=2048,
+        max_tokens=1024,  # Sufficient for clinical assessments, reduces output cost
     )
 
     tools = [retrieve_clinical_context, predict_risk, recommend_treatment]
