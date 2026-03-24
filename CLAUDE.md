@@ -79,13 +79,10 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 - [x] Day 2: Tasks 7-11 COMPLETE (RAG pipeline — 18 tests passing)
 - [x] Day 3: Tasks 12-17 COMPLETE (ML models — 27 tests)
 - [x] Day 4: Tasks 18-21 COMPLETE (Agent layer — 16 tests)
-- [ ] Day 5: Tasks 22-27 (MLOps) — IN PROGRESS
-  - [x] Task 22: Model registry (register, promote, rollback, persist) — 7/7 passing
-  - [x] Task 23: Inference monitor (structured JSONL logging, p50/p95/p99) — 6/6 passing
-  - [x] Task 24: Drift detection (PSI per feature, threshold alerting) — 4/4 passing
-  - [x] Task 25: SLO config (availability, latency, error rate, AUC targets)
-  - [x] Task 26: Performance benchmark (single request, batch, regression gates)
-  - [x] Task 27: Operational runbook (5 incident playbooks + escalation path)
+- [x] Day 5: Tasks 22-27 COMPLETE (MLOps — 17 tests)
+- [x] Day 6: Tasks 28-30 COMPLETE (AWS deployment doc, README polish, final review)
+- **PROJECT COMPLETE: 30/30 tasks, 51+ tests, 8 PRs merged**
+- **Interview: Friday March 27, 10:30am MST**
 
 ## Environment Variables
 ```bash

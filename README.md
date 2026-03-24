@@ -71,7 +71,9 @@ A production-grade clinical AI agent that demonstrates end-to-end ML engineering
 ```bash
 git clone https://github.com/gayan415/clinical-ai-agent.git
 cd clinical-ai-agent
-pip install -e ".[dev]"
+
+# Full setup: install deps + download embedding model
+make setup
 
 # Ingest clinical documents into vector store
 make ingest
@@ -86,9 +88,19 @@ make docker-build
 make run
 ```
 
+### Environment Variables
+```bash
+# Embedding provider (default: huggingface — local, free)
+export EMBEDDING_PROVIDER=huggingface  # or "bedrock" for AWS Titan Embed
+
+# AWS (only needed for Bedrock embeddings or agent LLM)
+export AWS_REGION=us-east-1
+export AWS_PROFILE=sbg-bedrock
+```
+
 ### Run Tests
 ```bash
-make test          # Unit + ML tests
+make test          # Unit + ML tests (51 tests)
 make test-all      # All tests including integration + e2e
 make ci            # Full CI pipeline (lint + typecheck + security + tests)
 ```
@@ -181,8 +193,13 @@ This project uses **TDD + Agentic Coding** — not vibe coding. Every feature fo
 
 ## AWS Deployment Architecture
 
-See [docs/aws-deployment.md](docs/aws-deployment.md) for the production AWS architecture:
-SageMaker endpoints, ECR, ECS/Fargate, CloudWatch, S3, Step Functions, HIPAA-compliant VPC design.
+See [docs/aws-deployment.md](docs/aws-deployment.md) for the full production architecture:
+- ECS Fargate (model + agent services), OpenSearch Serverless (vector search)
+- Multi-AZ high availability, multi-region disaster recovery (RPO < 1h, RTO < 4h)
+- 7-layer security (WAF, VPC isolation, KMS encryption, IAM roles, audit trail)
+- HIPAA compliance (BAA, encryption at rest/transit, FDA 21 CFR Part 11 awareness)
+- Blue/green model deployment, canary agent rollout, automated retraining pipeline
+- Cost estimation: ~$660/month pilot, ~$2,950/month production (100K+ patients)
 
 ## Author
 
