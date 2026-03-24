@@ -78,11 +78,14 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 - [x] CI fixes merged (missing cli.py, empty tests, missing Dockerfile, missing benchmark)
 - [x] Day 2: Tasks 7-11 COMPLETE (RAG pipeline — 18 tests passing)
 - [x] Day 3: Tasks 12-17 COMPLETE (ML models — 27 tests)
-- [ ] Day 4: Tasks 18-21 (Agent layer) — IN PROGRESS
-  - [x] Task 18: Safety module (disclaimer, confidence check, audit trail) — 8/8 passing
-  - [x] Task 19: Circuit breaker (CLOSED/OPEN/HALF_OPEN) — 8/8 passing
-  - [x] Task 20: LangChain agent + 3 tools (RAG, predict, recommend) + system prompt
-  - [x] Task 21: CLI entry point (assess + demo commands)
+- [x] Day 4: Tasks 18-21 COMPLETE (Agent layer — 16 tests)
+- [ ] Day 5: Tasks 22-27 (MLOps) — IN PROGRESS
+  - [x] Task 22: Model registry (register, promote, rollback, persist) — 7/7 passing
+  - [x] Task 23: Inference monitor (structured JSONL logging, p50/p95/p99) — 6/6 passing
+  - [x] Task 24: Drift detection (PSI per feature, threshold alerting) — 4/4 passing
+  - [x] Task 25: SLO config (availability, latency, error rate, AUC targets)
+  - [x] Task 26: Performance benchmark (single request, batch, regression gates)
+  - [x] Task 27: Operational runbook (5 incident playbooks + escalation path)
 
 ## Environment Variables
 ```bash

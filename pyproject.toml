@@ -70,6 +70,7 @@ select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
 "model/*.py" = ["N803", "N806"]
 "tests/ml/*.py" = ["N803", "N806"]
 "tests/integration/*.py" = ["N803", "N806"]
+"perf/*.py" = ["N803", "N806"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
