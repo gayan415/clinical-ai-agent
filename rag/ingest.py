@@ -173,14 +173,20 @@ def ingest_documents(data_dir: str, persist_dir: str) -> None:
         embedding_function=chroma_ef,  # type: ignore[arg-type]
     )
 
-    # Add chunks to collection
-    collection.add(
-        ids=[f"chunk_{i}" for i in range(len(chunks))],
+    # Upsert chunks using content hash as ID.
+    # Same content = same hash = no duplicates on re-ingestion.
+    # Updated content = new hash = inserted as new chunk.
+    import hashlib
+
+    ids = [hashlib.sha256(chunk.page_content.encode()).hexdigest()[:16] for chunk in chunks]
+
+    collection.upsert(
+        ids=ids,
         documents=[chunk.page_content for chunk in chunks],
         metadatas=[chunk.metadata for chunk in chunks],
     )
 
-    print(f"Ingested {len(chunks)} chunks into ChromaDB at {persist_dir}")
+    print(f"Upserted {len(chunks)} chunks into ChromaDB at {persist_dir}")
 
 
 if __name__ == "__main__":
