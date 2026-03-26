@@ -22,14 +22,14 @@ def create_clinical_agent() -> Any:
 
     Environment variables:
         AWS_REGION: AWS region for Bedrock (default: us-east-1)
-        AWS_PROFILE: AWS profile for credentials (default: sbg-bedrock)
+        AWS_PROFILE: AWS profile for credentials (default: <your_aws_profile>)
         BEDROCK_MODEL_ID: Model ID (default: us.anthropic.claude-sonnet-4-20250514-v1:0)
 
     Returns:
         A LangChain compiled agent graph that can be invoked with patient scenarios.
     """
     # Set AWS profile if specified
-    profile = os.environ.get("AWS_PROFILE", "sbg-bedrock")
+    profile = os.environ.get("AWS_PROFILE", "<your_aws_profile>")
     os.environ.setdefault("AWS_PROFILE", profile)
 
     model_id = os.environ.get(
