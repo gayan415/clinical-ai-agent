@@ -64,28 +64,45 @@ A production-grade clinical AI agent that demonstrates end-to-end ML engineering
 
 ### Prerequisites
 - Python 3.11+
-- Docker (or Colima)
-- AWS credentials with Bedrock access
+- macOS: `brew install libomp` (required by XGBoost)
+- Docker or Colima (optional — for containerized model service)
+- AWS credentials with Bedrock access (for the agent LLM)
 
 ### Setup
 ```bash
 git clone https://github.com/gayan415/clinical-ai-agent.git
 cd clinical-ai-agent
 
-# Full setup: install deps + download embedding model
+# Full setup: install deps + download embedding model (~80MB)
 make setup
 
-# Ingest clinical documents into vector store
+# Ingest clinical documents into vector store (one-time, idempotent)
 make ingest
 
-# Train ML models
+# Train models — saves XGBoost + PyTorch with registry
 make train
+```
 
-# Build model container
-make docker-build
+### Running Locally (2 terminals)
 
-# Run the agent
-make run
+**Terminal 1 — Model prediction service:**
+```bash
+source .venv/bin/activate
+uvicorn model.predict:app --port 8000
+# Wait for: "Uvicorn running on http://0.0.0.0:8000"
+```
+
+**Terminal 2 — Agent CLI:**
+```bash
+source .venv/bin/activate
+export AWS_REGION=us-east-1
+export AWS_PROFILE=sbg-bedrock
+
+# Run a patient assessment
+python cli.py assess "65-year-old male, ejection fraction 30%, creatinine 1.9, NYHA Class III"
+
+# Run demo with predefined scenarios
+python cli.py demo
 ```
 
 ### Environment Variables
@@ -93,9 +110,12 @@ make run
 # Embedding provider (default: huggingface — local, free)
 export EMBEDDING_PROVIDER=huggingface  # or "bedrock" for AWS Titan Embed
 
-# AWS (only needed for Bedrock embeddings or agent LLM)
+# AWS (only needed for agent LLM and Bedrock embeddings)
 export AWS_REGION=us-east-1
 export AWS_PROFILE=sbg-bedrock
+
+# Model service URL (default: http://localhost:8000)
+export MODEL_SERVICE_URL=http://localhost:8000
 ```
 
 ### Run Tests
@@ -103,6 +123,18 @@ export AWS_PROFILE=sbg-bedrock
 make test          # Unit + ML tests (51 tests)
 make test-all      # All tests including integration + e2e
 make ci            # Full CI pipeline (lint + typecheck + security + tests)
+```
+
+### Verify Setup
+```bash
+# Check vector store has data
+python -c "import chromadb; c=chromadb.PersistentClient('chroma_db'); print(f'Chunks: {c.get_or_create_collection(\"clinical_docs\").count()}')"
+
+# Check model is trained
+python -c "import joblib; m=joblib.load('models/xgboost_hf_risk.pkl'); print('Model loaded')"
+
+# Check model API is running
+curl http://localhost:8000/health
 ```
 
 ## Project Structure
