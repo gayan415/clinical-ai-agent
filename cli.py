@@ -4,11 +4,25 @@ Run: python cli.py assess "65-year-old male, EF 30%, creatinine 1.9"
 Run: python cli.py demo  (runs predefined scenarios)
 """
 
-import typer
-from rich.console import Console
-from rich.panel import Panel
+import sys
 
-from agent.agent import run_assessment
+# PyTorch + sentence-transformers + LangChain together create a very deep
+# import chain that exceeds Python's default recursion limit (1000).
+# Must be set before any imports that trigger torch/transformers loading.
+sys.setrecursionlimit(10000)
+
+# Pre-load heavy libraries to avoid recursion during Pydantic validation
+# when ChatBedrockConverse initializes. Order matters.
+import torch  # noqa: F401, E402
+import truststore  # noqa: E402
+
+truststore.inject_into_ssl()
+
+import typer  # noqa: E402
+from rich.console import Console  # noqa: E402
+from rich.panel import Panel  # noqa: E402
+
+from agent.agent import run_assessment  # noqa: E402
 
 app = typer.Typer(help="Clinical AI Agent for Heart Failure Risk Assessment")
 console = Console()
