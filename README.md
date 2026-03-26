@@ -4,6 +4,10 @@ A production-grade clinical AI agent that demonstrates end-to-end ML engineering
 
 **Built with Agentic Development + TDD** — engineer architects and reviews, AI agents execute under strict test-driven discipline.
 
+## Demo
+
+![Clinical AI Agent Demo](demo.gif)
+
 ## Architecture
 
 ```
