@@ -144,3 +144,89 @@ def train_pytorch(
         "scaler": scaler,
         "input_dim": X_train.shape[1],
     }
+
+
+def train_and_save(
+    data_path: str = "model/data/heart_failure.csv",
+    output_dir: str = "models",
+    registry_dir: str = "models",
+    seed: int = 42,
+) -> None:
+    """Full training pipeline: load → split → train both → evaluate → register → save.
+
+    This is what `make train` calls. It:
+    1. Loads the UCI dataset
+    2. Splits 80/20 with a fixed seed (reproducible)
+    3. Trains both XGBoost and PyTorch
+    4. Evaluates both on the test set
+    5. Registers both in the model registry with metrics
+    6. Saves the champion (best AUC) to disk for the FastAPI service
+    """
+    import hashlib
+    import os
+
+    import joblib
+    import pandas as pd
+    from sklearn.model_selection import train_test_split
+
+    from mlops.registry import ModelRegistry
+    from model.evaluate import evaluate_model
+    from model.features import extract_features
+
+    # Load and split data
+    df = pd.read_csv(data_path)
+    data_hash = hashlib.sha256(df.to_csv().encode()).hexdigest()[:12]
+    print(f"Dataset: {len(df)} patients, data hash: {data_hash}")
+
+    X, y = extract_features(df)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
+    print(f"Split: {len(X_train)} train, {len(X_test)} test")
+
+    # Train XGBoost
+    print("\nTraining XGBoost...")
+    xgb_model = train_xgboost(X_train, y_train, seed=seed)
+    xgb_metrics = evaluate_model(xgb_model, X_test, y_test, model_type="xgboost")
+    print(f"  AUC: {xgb_metrics['auc']:.3f} | Accuracy: {xgb_metrics['accuracy']:.3f}")
+
+    # Train PyTorch
+    print("\nTraining PyTorch...")
+    pt_model = train_pytorch(X_train, y_train, seed=seed)
+    pt_metrics = evaluate_model(pt_model, X_test, y_test, model_type="pytorch")
+    print(f"  AUC: {pt_metrics['auc']:.3f} | Accuracy: {pt_metrics['accuracy']:.3f}")
+
+    # Register both in model registry
+    os.makedirs(output_dir, exist_ok=True)
+    registry = ModelRegistry(registry_dir=registry_dir)
+
+    registry.register(
+        name="xgboost_hf_risk",
+        version=f"v1_{data_hash}",
+        path=f"{output_dir}/xgboost_hf_risk.pkl",
+        metrics={k: round(v, 4) for k, v in xgb_metrics.items()},
+    )
+    registry.register(
+        name="pytorch_hf_risk",
+        version=f"v1_{data_hash}",
+        path=f"{output_dir}/pytorch_hf_risk.pt",
+        metrics={k: round(v, 4) for k, v in pt_metrics.items()},
+    )
+
+    # Promote champion (best AUC)
+    if xgb_metrics["auc"] >= pt_metrics["auc"]:
+        champion, challenger = "XGBoost", "PyTorch"
+    else:
+        registry.promote("pytorch_hf_risk", f"v1_{data_hash}")
+        champion, challenger = "PyTorch", "XGBoost"
+
+    print(f"\nChampion: {champion} (AUC {max(xgb_metrics['auc'], pt_metrics['auc']):.3f})")
+    print(f"Challenger: {challenger}")
+
+    # Save champion model to disk for FastAPI service
+    joblib.dump(xgb_model, f"{output_dir}/xgboost_hf_risk.pkl")
+    torch.save(pt_model, f"{output_dir}/pytorch_hf_risk.pt")
+    print(f"\nModels saved to {output_dir}/")
+    print(f"Registry saved to {registry_dir}/registry.json")
+
+
+if __name__ == "__main__":
+    train_and_save()
