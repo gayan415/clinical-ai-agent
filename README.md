@@ -96,7 +96,7 @@ uvicorn model.predict:app --port 8000
 ```bash
 source .venv/bin/activate
 export AWS_REGION=us-east-1
-export AWS_PROFILE=sbg-bedrock
+export AWS_PROFILE=<your_aws_profile>
 
 # Run a patient assessment
 python cli.py assess "65-year-old male, ejection fraction 30%, creatinine 1.9, NYHA Class III"
@@ -112,7 +112,7 @@ export EMBEDDING_PROVIDER=huggingface  # or "bedrock" for AWS Titan Embed
 
 # AWS (only needed for agent LLM and Bedrock embeddings)
 export AWS_REGION=us-east-1
-export AWS_PROFILE=sbg-bedrock
+export AWS_PROFILE=<your_aws_profile>
 
 # Model service URL (default: http://localhost:8000)
 export MODEL_SERVICE_URL=http://localhost:8000

@@ -89,7 +89,7 @@ Interview prep lives at `/Users/gjayasun/git/AI/Abbott` — do not modify files 
 # Embedding provider (default: huggingface, runs locally)
 EMBEDDING_PROVIDER=huggingface   # or "bedrock" for AWS Titan Embed
 AWS_REGION=us-east-1             # only needed if EMBEDDING_PROVIDER=bedrock
-AWS_PROFILE=sbg-bedrock          # only needed if EMBEDDING_PROVIDER=bedrock
+AWS_PROFILE=<your_aws_profile>          # only needed if EMBEDDING_PROVIDER=bedrock
 ```
 
 ## Commands
