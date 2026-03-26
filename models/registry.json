@@ -1,0 +1,70 @@
+{
+  "models": [
+    {
+      "name": "xgboost_hf_risk",
+      "version": "v1_df589d6abe3c",
+      "path": "models/xgboost_hf_risk.pkl",
+      "metrics": {
+        "accuracy": 0.7333,
+        "auc": 0.8811,
+        "precision": 0.6957,
+        "recall": 0.64,
+        "f1": 0.6667,
+        "recall_class_0": 0.8,
+        "recall_class_1": 0.64
+      },
+      "registered_at": "2026-03-26T04:36:14.213057+00:00",
+      "status": "active"
+    },
+    {
+      "name": "pytorch_hf_risk",
+      "version": "v1_df589d6abe3c",
+      "path": "models/pytorch_hf_risk.pt",
+      "metrics": {
+        "accuracy": 0.7667,
+        "auc": 0.8229,
+        "precision": 0.8667,
+        "recall": 0.52,
+        "f1": 0.65,
+        "recall_class_0": 0.9429,
+        "recall_class_1": 0.52
+      },
+      "registered_at": "2026-03-26T04:36:14.213377+00:00",
+      "status": "candidate"
+    },
+    {
+      "name": "xgboost_hf_risk",
+      "version": "v1_df589d6abe3c",
+      "path": "models/xgboost_hf_risk.pkl",
+      "metrics": {
+        "accuracy": 0.7333,
+        "auc": 0.8811,
+        "precision": 0.6957,
+        "recall": 0.64,
+        "f1": 0.6667,
+        "recall_class_0": 0.8,
+        "recall_class_1": 0.64
+      },
+      "registered_at": "2026-03-26T05:34:09.691220+00:00",
+      "status": "candidate"
+    },
+    {
+      "name": "pytorch_hf_risk",
+      "version": "v1_df589d6abe3c",
+      "path": "models/pytorch_hf_risk.pt",
+      "metrics": {
+        "accuracy": 0.7667,
+        "auc": 0.8229,
+        "precision": 0.8667,
+        "recall": 0.52,
+        "f1": 0.65,
+        "recall_class_0": 0.9429,
+        "recall_class_1": 0.52
+      },
+      "registered_at": "2026-03-26T05:34:09.691727+00:00",
+      "status": "candidate"
+    }
+  ],
+  "active_key": "xgboost_hf_risk:v1_df589d6abe3c",
+  "previous_active_key": null
+}

@@ -8,13 +8,21 @@ ReAct loop: Reason → Act → Observe → Repeat or Answer
 """
 
 import os
+import sys
 from typing import Any
 
-from langchain.agents import create_agent
-from langchain_aws import ChatBedrockConverse
+# PyTorch's deep import chain (torch.distributed) exceeds Python's default
+# recursion limit when loaded alongside LangChain/boto3. Safe to increase.
+# Must happen before any imports that trigger torch loading.
+sys.setrecursionlimit(10000)
 
-from agent.prompts import SYSTEM_PROMPT
-from agent.tools import predict_risk, recommend_treatment, retrieve_clinical_context
+# Pre-load torch to avoid recursion during LangChain/Pydantic init
+import torch  # noqa: F401, E402
+from langchain.agents import create_agent  # noqa: E402
+from langchain_aws import ChatBedrockConverse  # noqa: E402
+
+from agent.prompts import SYSTEM_PROMPT  # noqa: E402
+from agent.tools import predict_risk, recommend_treatment, retrieve_clinical_context  # noqa: E402
 
 
 def create_clinical_agent() -> Any:
